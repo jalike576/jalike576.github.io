@@ -84,7 +84,11 @@ In addition, for the `write` operation implemented in opcode `syscall`, we can s
 
 Because of `__printf_chk` filtering `%n` and `$`, we can only use it for leaking addresses. But it is really enough
 
-We have two primitives, and it's time to pwn the binary
+We have two primitives, but how to exploit
+
+As we have to enter password to pass the round and read more, we will see where we are going to read into it
+
+
 
 
 
@@ -93,6 +97,9 @@ We have two primitives, and it's time to pwn the binary
 Exploiting this binary is such a real pain in the neck, as the `VM` itself consists of serious bugs, however we can only use the opcodes inside `program.bin` rather than crafting our own opcodes. 
 
 First we are going to see how we can get the `VM` addresses
+
+
+Ah, I use `xxd` command to dump program.bin and see the opcodes inside it
 
 ### Arbitrary read
 
