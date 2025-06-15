@@ -18,6 +18,8 @@ Okay the first thing we might have to know is the opcode implemented inside the 
 
 I don't really know how to get the right password, however my teammate [Peter](https://clowncs.github.io/) has found it using his great reversing skills
 
+Given the password of `program.bin`
+
 This is the list of opcodes that `RopVM` uses
 
 ```
