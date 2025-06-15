@@ -18,7 +18,7 @@ Okay the first thing we might have to know is the opcode implemented inside the 
 
 I don't really know how to get the right password, however my teammate [Peter](https://clowncs.github.io/) has found it using his great reversing skills
 
-Given the password of `program.bin`
+Given the password of `program.bin`, we successfully finished the first step, moving onto the next part of finding bugs and exploiting
 
 This is the list of opcodes that `RopVM` uses
 
@@ -84,22 +84,21 @@ In addition, for the `write` operation implemented in opcode `syscall`, we can s
 
 `v17[1]` and `v17[2]` are used again, they are respectively the second and third parameter of the VM, so if `v6 + v17[1]` belongs to a arbitrarily written region, we are likely to have `format string` bug
 
-Because of `__printf_chk` filtering `%n` and `$`, we can only use it for leaking addresses. But it is really enough
+Because of `__printf_chk` filtering `%n` and `$`, we can only use it for leaking addresses. But it is enough regarding the context
 
-We have two primitives, but how to exploit
+We have two primitives, but how to exploit?
 
 As we have to enter password to pass the round and read more, we will see where we are going to read into it
 
 
 
 
-
 ## Exploiting
 
-Exploiting this binary is such a real pain in the neck, as the `VM` itself consists of serious bugs, however we can only use the opcodes inside `program.bin` rather than crafting our own opcodes. 
+Exploiting this binary is such a real pain in the neck, as the `VM` itself consists of serious bugs, however we can only use the opcodes inside `program.bin` rather than crafting our own opcodes. So what we must do is to fully write into the code of `program.bin`
+
 
 First we are going to see how we can get the `VM` addresses
-
 
 Ah, I use `xxd` command to dump program.bin and see the opcodes inside it
 
@@ -117,7 +116,9 @@ My purpose is to overwrite all the `program.bin` stored inside heap region
 
 So I should find a way to set the first parameter to `0` and the second param to a big value
 
-I try to dive into `program.bin` to look for a place where I can get my first parameter become 0
+I try to dive into `program.bin` to look for a place where I can get my first parameter become 0, so that I can read from the base of `program.bin`
+
+
 
 
 
